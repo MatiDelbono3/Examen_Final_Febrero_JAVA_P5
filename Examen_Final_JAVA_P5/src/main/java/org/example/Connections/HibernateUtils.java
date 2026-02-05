@@ -5,7 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtils {
     public static final SessionFactory sessionfactory;
-    private static SessionFactory sessionFactory;
+
 
     static {
         try {
@@ -19,7 +19,5 @@ public class HibernateUtils {
         return sessionfactory.openSession();
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+
 }

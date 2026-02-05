@@ -28,7 +28,7 @@ public class PedidoService {
     }
 
     public List<Pedido> ObtenerPedidos (int idCliente) {
-        return pedidoDAO.ObtenerInscripciones(idCliente);
+        return pedidoDAO.ObtenerPedidos(idCliente);
     }
 
     public void ActualizarEstado(Integer idPedido, String estado) {
@@ -46,7 +46,7 @@ public class PedidoService {
 
     public DTOReportePedidos generarReportePedidos() {
 
-        CompletableFuture<List<Double>> porCliente =
+        CompletableFuture<List<DTOReportePedidos.EstadisticaCliente>> porCliente =
                 CompletableFuture.supplyAsync(() -> pedidoDAO.obtenerTotalPorCliente());
 
         CompletableFuture<List<DTOReportePedidos.EstadisticaEstado>> porEstado =

@@ -46,7 +46,7 @@ public class Main {
 
 
         try {
-            pedidoService.ActualizarEstado(1, "Pendiente");
+            pedidoService.ActualizarEstado(1, "pendiente");
             System.out.println("Estado actualizado con éxito");
         } catch (IllegalArgumentException e) {
             System.out.println("Error al actualizar estado: " + e.getMessage());

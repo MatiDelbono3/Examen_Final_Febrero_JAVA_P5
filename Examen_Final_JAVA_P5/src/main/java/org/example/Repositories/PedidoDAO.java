@@ -22,22 +22,31 @@ public class PedidoDAO {
             e.printStackTrace();
         }
     }
-    public List<Pedido> ObtenerInscripciones(int idCliente) {
+    public List<Pedido> ObtenerPedidos(int idCliente) {
         try (Session session = HibernateUtils.getSession()) {
             CriteriaBuilder builder =  session.getCriteriaBuilder();
             CriteriaQuery<Pedido> criteria = builder.createQuery(Pedido.class);
             Root<Pedido> root = criteria.from(Pedido.class);
-            List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
+
 
             if (idCliente !=0 ){
-                predicates.add(builder.equal(root.get("idAlumno"), idCliente));
-                criteria.select(root);
+                criteria.select(root)
+                        .where(
+                            builder.equal(
+                                    root.get("cliente").get("idCliente"), idCliente
+                            )
+                        )
+            ;
+
 
             }
             return session.createQuery(criteria).getResultList();
 
+
         }
+
     }
+
     public void ActualizarEstadoPedido(Integer idPedido, String estado) {
         try (Session session = HibernateUtils.getSession()) {
             session.beginTransaction();
@@ -51,29 +60,30 @@ public class PedidoDAO {
             e.printStackTrace();
         }
     }
-    public List<Double>
+    public List<DTOReportePedidos.EstadisticaCliente>
     obtenerTotalPorCliente() {
 
         try (Session session = HibernateUtils.getSession()) {
 
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Double> cq =
-                    builder.createQuery(Double.class);
+            CriteriaQuery<DTOReportePedidos.EstadisticaCliente> cq =
+                    builder.createQuery(DTOReportePedidos.EstadisticaCliente.class);
 
             Root<Pedido> pedido = cq.from(Pedido.class);
-            Expression<Double> suma = builder.sum(pedido.get("montoTotal"));
 
-            cq.select(suma)
-                            .where(
-                    builder.and(
-                            builder.equal(pedido.get("estado"), "PAGADO")
-
+            cq.select(
+                            builder.construct(
+                                    DTOReportePedidos.EstadisticaCliente.class,
+                                    pedido.get("cliente").get("idCliente"),
+                                    builder.sum(pedido.get("montoTotal"))
+                            )
                     )
+                    .where(
+                            builder.equal(pedido.get("estado"), "PAGADO")
+                    )
+                    .groupBy(pedido.get("cliente").get("idCliente"));
 
-            );
-
-            cq.groupBy(pedido.get("cliente").get("idCliente"));
-            return session.createQuery(cq).getResultList();
+                return session.createQuery(cq).getResultList();
         }
 
     }

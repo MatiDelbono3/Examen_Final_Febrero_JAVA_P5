@@ -1,11 +1,12 @@
 package org.example.DTO;
+import java.util.Collections;
 import java.util.List;
 
 public class DTOReportePedidos {
     private List<EstadisticaCliente> TotalPorCliente;
     private List<EstadisticaEstado> pedidosPorEstado;
 
-    public DTOReportePedidos(List<Double> TotalPorCliente, List<EstadisticaEstado> pedidosPorEstado) {
+    public DTOReportePedidos(List<EstadisticaCliente>TotalPorCliente, List<EstadisticaEstado> pedidosPorEstado) {
         this.TotalPorCliente = TotalPorCliente;
         this.pedidosPorEstado=pedidosPorEstado;
     }
@@ -39,7 +40,7 @@ public class DTOReportePedidos {
             return idCliente;
         }
 
-        public void setIdCliente(int idAlumno) {
+        public void setIdCliente(int idCliente) {
             this.idCliente = idCliente;
         }
 
@@ -47,7 +48,7 @@ public class DTOReportePedidos {
             return Total;
         }
 
-        public void setCantidad(long cantidad) {
+        public void setCantidad(long Total) {
             this.Total = Total;
         }
     }

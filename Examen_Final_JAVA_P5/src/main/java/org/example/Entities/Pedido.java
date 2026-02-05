@@ -17,13 +17,15 @@ public class Pedido {
     private LocalDate fechaPedido;
     private Double montoTotal;
     private String estado;
-
+    public Pedido() {
+    }
     public Pedido(Cliente cliente, LocalDate fechaPedido, Double montoTotal, String estado) {
         this.setCliente(cliente);
         this.setFechaPedido(fechaPedido);
         this.setMontoTotal(montoTotal);
         this.setEstado(estado);
     }
+
 
     public int getIdPedido() {
         return idPedido;
