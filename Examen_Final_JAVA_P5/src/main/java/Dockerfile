@@ -1,0 +1,6 @@
+FROM mysql:8.0
+ENV MYSQL_DATABASE=PROG2_122024_Williner
+ENV MYSQL_USER=MDBONO00
+ENV MYSQL_PASSWORD=OtraVezProg2
+ENV MYSQL_ROOT_PASSWORD=root
+ADD init.sql /docker-entrypoint-initdb.d/
